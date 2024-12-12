@@ -8,33 +8,37 @@ function NoteCreator() {
 
     const Save = () => {
 
-        if (coursename.length < 1 || note.length < 1){
+        if (coursename.length < 1 || note.length < 1) {
             alert("MUST BE AT LEAST 1 CHARACTER");
         }
-        else{
+        else {
             const n = { coursename, script: note };
-             setCourseName("");
-             setNote("");
-    
+            setCourseName("");
+            setNote("");
+
             saveNote(n);
         }
     };
 
     return (
+
         <div>
+            <h4>From here you can add notes</h4>
             <input
+                id="course_input"
                 type="text"
                 value={coursename}
                 onChange={(e) => setCourseName(e.target.value)}
                 placeholder="Course name"
             />
-            <input
+            <textarea
+                id="note_input"
                 type="text"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Note"
             />
-            <button onClick={Save}>Save</button>
+            <button id="save_button" onClick={Save}>Save</button>
         </div>
     );
 }

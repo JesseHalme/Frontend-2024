@@ -1,7 +1,7 @@
 function Footer() {
     return (
-      <div>
-        <p>Copyright by Jepukka</p>
+      <div className="footer">
+        <h4>© Copyright by Jepukka</h4>
       </div>
     );
   }

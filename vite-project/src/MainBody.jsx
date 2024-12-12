@@ -2,14 +2,17 @@ import MyCourse from "./MyCourse";
 import NoteCreator from "./NoteCreator";
 
 function MainBody() {
-    return (
-      <div>
-        <p>Tänne tulee asioita ja juttuja</p>
-        <NoteCreator/>
-        <MyCourse/>
+  return (
+    <div id="Main">
+      <div id="note_container">
+        <NoteCreator />
       </div>
-    );
-  }
-  
-  export default MainBody;
-  
+      <div id="saved_notes">
+        <MyCourse />
+      </div>
+    </div>
+
+  );
+}
+
+export default MainBody;
