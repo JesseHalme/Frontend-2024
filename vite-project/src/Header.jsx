@@ -1,13 +1,31 @@
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 function Header() {
+
+  const location = useLocation();
+
+  let title;
+  switch (location.pathname) {
+    case '/list':
+      title = 'List';
+      break;
+    case '/add':
+      title = 'Add';
+      break;
+    default:
+      title = 'Home';
+  }
+
   return (
     <div id="navbardiv">
       <div id="navbarcontainer">
-        <h1>Home</h1>
+        <h1>{title}</h1>
         <h2>NoteApp</h2>
         <ul id="navbarul">
-          <li class="navbarli"><a href="#list">List</a></li>
-          <li class="navbarli"><a href="#add">Add</a></li>
-          <li class="navbarli"><a href="#home">Home</a></li>
+          <li className="navbarli"><Link to="/list">List</Link></li>
+          <li className="navbarli"><Link to="/add">Add</Link></li>
+          <li className="navbarli"><Link to="/">Home</Link></li>
         </ul>
       </div>
     </div>

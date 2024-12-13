@@ -17,12 +17,13 @@ function NoteCreator() {
             setNote("");
 
             saveNote(n);
+            alert(`Course ${coursename} added and it ID is...`);
         }
     };
 
     return (
 
-        <div>
+        <div className="note_container">
             <h4>From here you can add notes</h4>
             <input
                 id="course_input"
