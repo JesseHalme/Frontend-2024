@@ -1,10 +1,14 @@
 import { create } from "zustand";
 
+let nextCourseId = 0;
+export const CourseId = () => {
+    return nextCourseId++;
+};
+
 const PrefefinedNotes = create((set) => ({
     peeps: [
-        { coursename: "JavaScript", script: "JavaScript is funny language" },
-        { coursename: "JavaScript", script: " *Next day* JavaScript is not fun today" },
-        { coursename: "Programming 1", script: "Now I know, how to for loop working in c#!" },
+        { id: CourseId(), coursename: "JavaScript", script: "JavaScript is funny language" },
+        { id: CourseId(), coursename: "Programming 1", script: "Now I know, how to for loop working in c#!" },
     ],
     saveNote: (n) => set((state) => ({ peeps: [...state.peeps, n] })),
 
