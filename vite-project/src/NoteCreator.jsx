@@ -1,55 +1,41 @@
 import React, { useState } from "react";
 import Dropdown from "./components/dropdown";
-import PrefefinedNotes, { CourseId } from "./courcsenotes/PrefefinedNotes";
-import TimeStamp from "./components/Timestamp";
-import ApiNotes from "./courcsenotes/ApiNotes";
+import UsePrefefinedNotes from "./courcsenotes/UsePrefefinedNotes";
+import TimeStamp from "./components/Timestamp"
 
 
 function NoteCreator() {
     const [coursename, setCourseName] = useState("");
     const [note, setNote] = useState("");
-
-    const peeps = PrefefinedNotes((state) => state.peeps);
-    const saveNote = PrefefinedNotes((state) => state.saveNote);
-
+    const addNote = UsePrefefinedNotes((state) => state.addNote);
+    const addCourse = UsePrefefinedNotes((state) => state.addCourse);
+    const peeps = UsePrefefinedNotes((state) => state.peeps);
+    const courseNames = peeps.map((course) => course.name);
 
     const SaveNote = () => {
-        if (note.length < 1) {
-            alert("Note can't be empty");
-        } else {
-            const n = { id: TimeStamp(), script: note, timestamp: new Date().toISOString() };
-            setNote("");
-            saveNote(n);
-            console.log(`New Note TimeStamp is: ${n.id}`);
+        if (!coursename || !note) {
+            alert("Please select a course and write a note.");
+            return;
         }
+        const newNote = { course: coursename, script: note, timestamp: TimeStamp };
+        addNote(newNote);
+        setNote("");
     };
 
     const SaveCourse = () => {
-        const courses = PrefefinedNotes.getState().peeps;
-
-        if (coursename.length < 1) {
-            alert("Course name can't be empty");
+        if (!coursename) {
+            alert("Please enter a course name.");
+            return;
         }
-        else if (courses.some(course => course.coursename.toLowerCase() === coursename.toLowerCase())) {
-            alert(`Course '${coursename}' already exists!`);
-        } else {
-            const n = { id: CourseId(), coursename, script: note };
-            setCourseName("");
-            setNote("");
-
-            saveNote(n);
-            alert(`Course ${coursename} added and it ID is ${n.id}`);
-        }
+        const newCourse = { name: coursename };
+        addCourse(newCourse);
+        setCourseName("");
     };
-
-    const courseNames = PrefefinedNotes((state) => state.peeps).map(peep => peep.coursename);
 
     return (
         <div id="add_container">
-
-
             <div id="note_container">
-                <h4>From here you can add notes</h4>
+                <h4>From here you can add notes. To right you can add new course</h4>
                 <Dropdown
                     options={courseNames}
                     selectedValue={coursename}
@@ -57,17 +43,14 @@ function NoteCreator() {
                 />
                 <textarea
                     id="note_input"
-                    type="text"
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
-                    placeholder="Note"
+                    placeholder="Write your note here..."
                 />
-                <button className="button" onClick={SaveNote}>Save</button>                             
-                
-
+                <button className="button" onClick={SaveNote}>Save</button>
             </div>
             <div id="course_container">
-                <h4>From here you can add a new courses. Please, add your course and write note to left</h4>
+                <h4>From here you can add a new course. Please, add your course and write a note to the left</h4>
                 <input
                     id="course_input"
                     type="text"

@@ -1,6 +1,3 @@
-import MyCourse from "./MyCourse";
-import NoteCreator from "./NoteCreator";
-
 function MainBody() {
   return (
     <div id="Main">    

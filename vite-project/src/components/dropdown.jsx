@@ -1,5 +1,4 @@
 import React from "react";
-import PrefefinedNotes from "../courcsenotes/PrefefinedNotes";
 
 function Dropdown({ options, selectedValue, onChange }) {
 
@@ -8,8 +7,8 @@ function Dropdown({ options, selectedValue, onChange }) {
             value={selectedValue}
             onChange={onChange}
         >
-            {options.map((option, index) => (
-                <option key={index} value={option}>
+            {options.map((option, i) => (
+                <option key={i} value={option}>
                     {option}
                 </option>
             ))}
