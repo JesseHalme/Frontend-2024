@@ -20,6 +20,7 @@ function NoteCreator() {
         const newNote = { course: coursename, script: note, timestamp: TimeStamp };
         addNote(newNote);
         setNote("");
+        setCourseName("");
     };
 
     const SaveCourse = () => {

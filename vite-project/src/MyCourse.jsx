@@ -19,9 +19,11 @@ function MyCourse() {
   }, [fetchCourse, fetchNotes]);
 
 
-const filteredNotes = useMemo(() => {
-  return notes.filter((note) => note.course === selectedCourse);
-}, [notes, selectedCourse])
+  const filteredNotes = useMemo(() => {
+    return notes.filter(
+      (note) => note.course.name == selectedCourse
+    );
+  }, [notes, selectedCourse]);
 
 
 const courseNames = useMemo(() => {
@@ -51,8 +53,8 @@ const CourseChange = (e) => {
 
       {filteredNotes.length > 0 ? (
                 <ul>
-                    {filteredNotes.map((note, i) => (
-                        <Note key={i} coursename={note.course} script={note.note} />
+                    {filteredNotes.map((note) => (
+                        <Note key={note.id} id={note.id} coursename={note.course.name} script={note.text} timestamp={note.timestamp}/>
                     ))}
                 </ul>
             ) : (
