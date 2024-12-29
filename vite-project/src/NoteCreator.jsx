@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dropdown from "./components/dropdown";
 import UsePrefefinedNotes from "./courcsenotes/UsePrefefinedNotes";
-import TimeStamp from "./components/Timestamp"
 
 
 function NoteCreator() {
@@ -11,26 +10,52 @@ function NoteCreator() {
     const addCourse = UsePrefefinedNotes((state) => state.addCourse);
     const peeps = UsePrefefinedNotes((state) => state.peeps);
     const courseNames = peeps.map((course) => course.name);
+    const fetchCourse = UsePrefefinedNotes.getState().fetchCourse;
+    const fetchNotes = UsePrefefinedNotes.getState().fetchNotes;
+
+    useEffect(() => {
+        const fetchInitialData = async () => {
+            await fetchCourse();
+            await fetchNotes();
+        };
+        fetchInitialData();
+    }, [fetchCourse, fetchNotes]);
 
     const SaveNote = () => {
-        if (!coursename || !note) {
+        if (coursename.length == 0 || note.length == 0) {
             alert("Please select a course and write a note.");
             return;
         }
-        const newNote = { course: coursename, script: note, timestamp: TimeStamp };
+
+        const selectedCourse = peeps.find(course => course.name == coursename);
+        const noteId = UsePrefefinedNotes.getState().notes.length + 1;
+        const timeStamp = new Date().toLocaleString();
+
+        const newNote = {id: noteId, course: selectedCourse, text: note, timestamp: timeStamp };
         addNote(newNote);
         setNote("");
         setCourseName("");
+        console.log(UsePrefefinedNotes.getState().notes);
     };
 
     const SaveCourse = () => {
-        if (!coursename) {
+        if (coursename.length == 0) {
             alert("Please enter a course name.");
             return;
         }
-        const newCourse = { name: coursename };
+        const duplicateCourse = peeps.some((course) => course.name.toLowerCase() === coursename.toLowerCase());
+        if (duplicateCourse) {
+            alert("This course name already exists. Please check your course name and choose a different name");
+            setCourseName("");
+            return;
+        }
+
+        const courseId = peeps.reduce((maxId, course) => Math.max(maxId, course.id), -1) + 1;
+
+        const newCourse = {id: courseId, name: coursename };
         addCourse(newCourse);
         setCourseName("");
+        alert(`Course "${coursename}" added and it id is ${courseId}`);
     };
 
     return (

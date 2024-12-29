@@ -4,7 +4,7 @@ function MainBody() {
         <h1 className="HomeText">Landing Page</h1> 
         <h3 className="HomeText">Welcome to my site!</h3> 
         <p className="HomeText">
-          Please, use navigation items to natigate
+          Please, use navigation items to navigate
         </p>
     </div>
 

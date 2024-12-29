@@ -37,7 +37,7 @@ const UsePrefefinedNotes = create((set, get) => ({
   },
     deleteNote: (id) =>
         set((state) => ({
-             notes: state.notes.filter((note) => note.id !== id),
+             notes: state.notes.filter((note) => note.id != id),
         })),
 }));
 

@@ -7,33 +7,39 @@ function MyCourse() {
   const [selectedCourse, setSelectedCourse] = useState("");
   const notes = UsePrefefinedNotes((state) => state.notes);
   const fetchCourse = UsePrefefinedNotes.getState().fetchCourse;
-  const fetchNotes = UsePrefefinedNotes.getState().fetchNotes; 
+  const fetchNotes = UsePrefefinedNotes.getState().fetchNotes;
 
 
   useEffect(() => {
     const fetchInitialData = async () => {
-      await fetchCourse(); 
-      await fetchNotes(); 
+      await fetchCourse();
+      await fetchNotes();
+      setSelectedCourse("all");
     };
     fetchInitialData();
   }, [fetchCourse, fetchNotes]);
 
 
   const filteredNotes = useMemo(() => {
-    return notes.filter(
-      (note) => note.course.name == selectedCourse
+    if (selectedCourse == "all") {
+      return notes;
+    }
+    const selectedCourseObject = UsePrefefinedNotes.getState().peeps.find(
+      (course) => course.name == selectedCourse
     );
+    return notes.filter((note) => note.course.id == selectedCourseObject?.id);
   }, [notes, selectedCourse]);
 
 
-const courseNames = useMemo(() => {
-    return UsePrefefinedNotes.getState().peeps.map((course) => course.name);
-}, [UsePrefefinedNotes.getState().peeps]);
+  const courseNames = useMemo(() => {
+    const courses = UsePrefefinedNotes.getState().peeps.map((course) => course.name);
+    return ["all", ...courses];
+  }, [UsePrefefinedNotes.getState().peeps]);
 
 
-const CourseChange = (e) => {
+  const CourseChange = (e) => {
     setSelectedCourse(e.target.value);
-};
+  };
 
   return (
 
@@ -52,14 +58,14 @@ const CourseChange = (e) => {
       </div>
 
       {filteredNotes.length > 0 ? (
-                <ul>
-                    {filteredNotes.map((note) => (
-                        <Note key={note.id} id={note.id} coursename={note.course.name} script={note.text} timestamp={note.timestamp}/>
-                    ))}
-                </ul>
-            ) : (
-                <p>No notes available for this course</p>
-            )}
+        <ul>
+          {filteredNotes.map((note) => (
+            <Note key={note.id} id={note.course.id} coursename={note.course.name} text={note.text} timestamp={note.timestamp} />
+          ))}
+        </ul>
+      ) : (
+        <p>No notes available for this course</p>
+      )}
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import UsePrefefinedNotes from "./courcsenotes/UsePrefefinedNotes";
 
-function Note({ id, coursename, script, timestamp }) {
+function Note({ id, coursename, text, timestamp }) {
     const deleteNote = UsePrefefinedNotes((state) => state.deleteNote);
 
     return (
         <li>
-                <strong>{id + ")"} {coursename}</strong> : {script}
+                <strong>{"ID: " + id + ")"} {coursename}</strong> : {text}
                 &emsp;
                 <small>{new Date(timestamp).toLocaleString()}</small>
             <button
