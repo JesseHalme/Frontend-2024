@@ -6,51 +6,54 @@ import UsePrefefinedNotes from "./courcsenotes/UsePrefefinedNotes";
 function NoteCreator() {
     const [coursename, setCourseName] = useState("");
     const [note, setNote] = useState("");
+    
+    // Functions from the predefined notes store
     const addNote = UsePrefefinedNotes((state) => state.addNote);
     const addCourse = UsePrefefinedNotes((state) => state.addCourse);
-    const peeps = UsePrefefinedNotes((state) => state.peeps);
-    const courseNames = peeps.map((course) => course.name);
+    const courses = UsePrefefinedNotes((state) => state.courses);
+    const courseNames = courses.map((course) => course.name);
+
     const fetchCourse = UsePrefefinedNotes.getState().fetchCourse;
     const fetchNotes = UsePrefefinedNotes.getState().fetchNotes;
 
-    useEffect(() => {
+    useEffect(() => { // Let's define an asynchronous function that retrieves the necessary data
         const fetchInitialData = async () => {
             await fetchCourse();
             await fetchNotes();
         };
         fetchInitialData();
-    }, [fetchCourse, fetchNotes]);
+    }, [fetchCourse, fetchNotes]); // useEffect will be re-run if these functions change
 
-    const SaveNote = () => {
+    const SaveNote = () => { // function to save a new note
         if (coursename.length == 0 || note.length == 0) {
-            alert("Please select a course and write a note.");
+            alert("Please select a course and write a note."); // Alert if user don't have a course and note at the same time
             return;
         }
 
-        const selectedCourse = peeps.find(course => course.name == coursename);
+        const selectedCourse = courses.find(course => course.name == coursename);
         const noteId = UsePrefefinedNotes.getState().notes.length + 1;
         const timeStamp = new Date().toLocaleString();
 
-        const newNote = {id: noteId, course: selectedCourse, text: note, timestamp: timeStamp };
+        const newNote = {id: noteId, course: selectedCourse, text: note, timestamp: timeStamp };    // Are given properties
         addNote(newNote);
         setNote("");
         setCourseName("");
-        console.log(UsePrefefinedNotes.getState().notes);
     };
 
-    const SaveCourse = () => {
+    const SaveCourse = () => { // Function to save a new course
         if (coursename.length == 0) {
-            alert("Please enter a course name.");
+            alert("Please enter a course name."); // Alert if user don't have a course name
             return;
         }
-        const duplicateCourse = peeps.some((course) => course.name.toLowerCase() === coursename.toLowerCase());
+        // Let's see if there is already a course
+        const duplicateCourse = courses.some((course) => course.name.toLowerCase() === coursename.toLowerCase());
         if (duplicateCourse) {
             alert("This course name already exists. Please check your course name and choose a different name");
             setCourseName("");
             return;
         }
-
-        const courseId = peeps.reduce((maxId, course) => Math.max(maxId, course.id), -1) + 1;
+        // courseId is calculated by finding the highest ID among courses and adding 1 to get the next available course ID
+        const courseId = courses.reduce((maxId, course) => Math.max(maxId, course.id), -1) + 1;
 
         const newCourse = {id: courseId, name: coursename };
         addCourse(newCourse);

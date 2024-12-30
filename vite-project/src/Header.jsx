@@ -3,9 +3,10 @@ import { useLocation } from "react-router-dom";
 
 function Header() {
 
-  const location = useLocation();
+  const location = useLocation(); // Get the current location using useLocation hook
 
   let title;
+  // Determine the title based on the current pathname
   switch (location.pathname) {
     case '/list':
       title = 'List';
