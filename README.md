@@ -1,7 +1,7 @@
 # Frontend-Final project 2024 / Note App
 
 This is my final project from a frontend course I took at the University of Applied Sciences. This is not "real" note app. 
-This will only save your notes for the duration of the session, if you refresh your page, your notes will be notes.
+This will only save your notes for the duration of the session, if you refresh your page, your notes will be gone.
 
 Install and start-up
 
