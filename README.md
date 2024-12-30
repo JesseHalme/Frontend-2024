@@ -12,7 +12,7 @@ Install and start-up
 - put to console "npm install zustand". Zustand is used for managing global state and handling state updates in React projects without the complexity of Redux-style state management.
 - put to console "npm install react-router-dom". React Router is used for managing navigation and URL routing in React applications.
 
-3. 
+3. The introduction of project
 - put to console "npm run dev" and open the link (In visual code it open to console). Have fun with my project!
 
 If you have problem with install, look what console tells to you.
