@@ -8,4 +8,6 @@ What external tools I used?
 
 - Button - https://getcssscan.com/css-buttons-examples <-- number 29
 
+If you think, what jepukka mean in footer, don't worry. It is my nickname😄
+
 
